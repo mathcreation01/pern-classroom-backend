@@ -10,8 +10,8 @@ router.get('/', async (req, res) => {
     try {
         const { search, department, page = 1, limit = 10, sortOrder = 'asc' } = req.query;
 
-        const currentPage = Math.max(1, +page);
-        const limitPerPage = Math.max(1, +limit);
+        const currentPage = Math.max(1, parseInt(String(page), 10) || 1);
+        const limitPerPage = Math.min(Math.max(1, parseInt(String(limit), 10) || 10), 100);
 
         const offset = (currentPage - 1) * limitPerPage;
         const filterConditions = [];
@@ -27,7 +27,10 @@ router.get('/', async (req, res) => {
         }
 
         if (department) {
-        filterConditions.push(ilike(departments.name, `%${department}%`));
+            //filterConditions.push(ilike(departments.name, `%${department}%`));
+            //to prevent SQL injection, we can use parameterized queries instead of string interpolation
+            const deptParttern = `%${String(department).replace(/%/g, '\\%').replace(/_/g, '\\_')}%`;
+            filterConditions.push(ilike(departments.name, deptParttern));
         }
 
         const whereClause =
