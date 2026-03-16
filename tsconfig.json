@@ -9,8 +9,8 @@
     "moduleResolution": "node",
 
     /* Project structure */
-    "rootDir": "./src",
-    "outDir": "./dist",
+    "rootDir": "src",
+    "outDir": "dist",
 
     /* Type safety */
     "strict": true,
@@ -20,8 +20,8 @@
     /* Interop & correctness */
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "allowImportingTsExtensions": true,
-    "noEmit": true,
+    // "allowImportingTsExtensions": true,
+    // "noEmit": true,
 
     /* Build output */
     "sourceMap": true,
